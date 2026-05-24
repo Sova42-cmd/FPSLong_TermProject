@@ -3,6 +3,7 @@ using UnityEngine;
 public class MouseMovement : MonoBehaviour
 {
 
+    public Transform playerBody;
     public float mouseSensetivity = 700f;
 
     float xRotation = 0f;
@@ -25,13 +26,12 @@ public class MouseMovement : MonoBehaviour
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensetivity * Time.deltaTime;
 
         xRotation -= mouseY;
-
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         // only X rotation on the camera
-        yRotation += mouseX;
+        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
-        transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
-
+        // only Y rotation on the player root
+        playerBody.Rotate(Vector3.up * mouseX);
     }
 }
