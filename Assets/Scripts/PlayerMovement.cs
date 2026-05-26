@@ -91,7 +91,7 @@ private bool isGrounded;
         //check for jump
         if (Input.GetButton("Jump") && isGrounded)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -1.5f * gravity);
+            velocity.y = Mathf.Sqrt(jumpHeight * -1.9f * gravity);
         }
 
         //falling down
