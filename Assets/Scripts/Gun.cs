@@ -2,13 +2,12 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
+
     public float damage = 10f;
     public float range = 100f;
-
-    //public GameObject MuzzleFlash;
-    //public Transform MuzzleFLashPoint;
-
     public Camera fpsCam;
+    public ParticleSystem MuzzleFlash;
+    public GameObject ImpactEffect;
 
     void Update()
     {
@@ -20,12 +19,17 @@ public class Gun : MonoBehaviour
 
     private void Shoot()
     {
-        RaycastHit hit;
-        //GameObject flash = Instantiate(MuzzleFlash, MuzzleFLashPoint.position, MuzzleFLashPoint.rotation);
-        //Destroy(flash, 0.05f); 
-        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
+
+        MuzzleFlash.Play();
+
+        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out RaycastHit hit, range))
         {
-            Debug.Log(hit.transform.name);
+            //Debug.Log(hit.transform.name);
+
+            //if target null take damage
+
+            GameObject ImpactGo = Instantiate(ImpactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+            Destroy(ImpactGo, 2f);
         }
     }
 }
