@@ -3,13 +3,11 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 
 {
-public enum MovementState { walking, sprinting, crouching, air }
+public enum MovementState { walking, crouching, dashing, air }
 public MovementState state;
 
 [Header("===== Movement =====")]
 public float walkSpeed;
-public float sprintSpeed;
-public KeyCode sprintKey = KeyCode.LeftShift;
 private float moveSpeed;
 
 [Header("===== Crouch =====")]
@@ -17,6 +15,17 @@ public float crouchSpeed;
 public float crouchYScale;
 private float startYScale;
 public KeyCode crouchKey = KeyCode.C;
+
+[Header("==== Dash ====")]
+public KeyCode dashKey = KeyCode.LeftAlt;
+public float dashSpeed = 20f;
+public float dashDuration = 0.2f;
+public float dashCooldown = 2f;
+
+public bool isDashing = false;
+public float dashTimer = 0f;
+public float dashCooldownTimer = 0f;
+public Vector3 dashDirection;
 
 [Header("===== Jump & Gravity =====")]
 public float jumpHeight = 3f;
@@ -32,94 +41,115 @@ private CharacterController controller;
 private Vector3 velocity;
 private bool isGrounded;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+void Start()
+{
+    controller = GetComponent<CharacterController>();   
+    startYScale = transform.localScale.y;
+}
+
+void Update()
+{
+    StateHandler();
+    HandleMovement();
+    HandleJump();
+    HandleCrouch();
+    HandleDash();
+}
+
+void OnDrawGizmosSelected() // krasnenkiy ground check
+{
+    Gizmos.color = Color.red;
+    Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
+}
+
+private void StateHandler()
+{
+    if (isDashing)
     {
-        controller = GetComponent<CharacterController>();   
-        startYScale = transform.localScale.y;
+        state = MovementState.dashing;
+        return;
     }
 
-    // Update is called once per frame
-    void Update()
+    if (Input.GetKey(crouchKey))
     {
-
-        StateHandler();
-        HandleMovement();
-        HandleJump();
-        HandleCrouch();
-
+        state = MovementState.crouching;
+        moveSpeed = crouchSpeed;    
     }
 
-    void OnDrawGizmosSelected() // krasnenkiy ground check
+    else if (isGrounded)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
+        state = MovementState.walking;
+        moveSpeed = walkSpeed;
     }
 
-    private void StateHandler()
+    else
     {
+        state = MovementState.air;
+    }
+}
 
-        if (Input.GetKey(crouchKey))
-        {
-            state = MovementState.crouching;
-            moveSpeed = crouchSpeed;    
-        }
+private void HandleJump()
+{
+    //ground check
+    isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        else if (isGrounded && Input.GetKey(sprintKey))
-        {
-            state = MovementState.sprinting;
-            moveSpeed = sprintSpeed;
-        }
-
-        else if (isGrounded)
-        {
-            state = MovementState.walking;
-            moveSpeed = walkSpeed;
-        }
-
-        else
-        {
-            state = MovementState.air;
-        }
+    //check for jump
+    if (Input.GetButton("Jump") && isGrounded)
+    {
+        velocity.y = Mathf.Sqrt(jumpHeight * -1.9f * gravity);
     }
 
-    private void HandleJump()
-    {
-        //ground check
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+    //falling down
+    velocity.y += gravity * Time.deltaTime;
 
-        //check for jump
-        if (Input.GetButton("Jump") && isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -1.9f * gravity);
-        }
-
-        //falling down
-        velocity.y += gravity * Time.deltaTime;
-
-        controller.Move(velocity * Time.deltaTime);
-    }
+    controller.Move(velocity * Time.deltaTime);
+}
     
-    private void HandleMovement()
+private void HandleMovement()
+{
+    float x = Input.GetAxis("Horizontal");//Input with CAPITCAL I
+    float z = Input.GetAxis("Vertical");
+
+    //create moving vector (right = redAxis & forward = blueAxis)
+    Vector3 move = transform.right * x + transform.forward * z;
+    controller.Move(move * moveSpeed * Time.deltaTime);
+}
+private void HandleCrouch()
+{
+    if (Input.GetKeyDown(crouchKey))
     {
-        float x = Input.GetAxis("Horizontal");//Input with CAPITCAL I
+        Debug.Log("I'm crouching!! I'm crouching!!");
+        transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+    }
+
+    if (Input.GetKeyUp(crouchKey))
+    {
+        transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+    }
+}
+private void HandleDash()
+{
+    if (dashCooldownTimer > 0f)
+        dashCooldownTimer -= Time.deltaTime;
+
+    if (Input.GetKeyDown(dashKey) && !isDashing && dashCooldownTimer <= 0f)
+    {
+        isDashing = true;
+        dashTimer = dashDuration;
+        dashCooldownTimer = dashCooldown;
+
+        float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
-
-        //create moving vector (right = redAxis & forward = blueAxis)
-        Vector3 move = transform.right * x + transform.forward * z;
-        controller.Move(move * moveSpeed * Time.deltaTime);
+        Vector3 inputDir = transform.right * x + transform.forward * z;
+        dashDirection = inputDir.magnitude > 0.1f ? inputDir.normalized : transform.forward;
     }
-    private void HandleCrouch()
+
+    if (isDashing)
     {
-        if (Input.GetKeyDown(crouchKey))
-        {
-            Debug.Log("I'm crouching!! I'm crouching!!");
-            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
-        }
-
-        if (Input.GetKeyUp(crouchKey))
-        {
-            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
-        }
+        dashTimer -= Time.deltaTime;
+        controller.Move(dashDirection * dashSpeed * Time.deltaTime);
+        if (dashTimer <= 0f)
+        isDashing = false;
     }
+}
 }
