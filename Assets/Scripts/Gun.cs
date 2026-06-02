@@ -7,21 +7,28 @@ public class Gun : MonoBehaviour
     public float Range = 100f;
     public Camera fpsCam;
 
+    [Header("=== Cooldown ===")]
+    public float fireRate = 0.5f;
+    public float nextTimeToFire = 0f; 
+    
+    [Header("=== Recoil ===")]
+     // later
+
     [Header("=== VFX ===")]
     //public ParticleSystem MuzzleFlash;
     public GameObject ImpactEffect;
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire)
         {
+            nextTimeToFire = Time.time + fireRate;
             Shoot();
         }   
     }
 
     private void Shoot()
     {
-
         //MuzzleFlash.Play();
 
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out RaycastHit hit, Range, ~ignoreMask))

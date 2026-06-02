@@ -39,7 +39,7 @@ public LayerMask groundMask;
 // private state
 private CharacterController controller;
 private Vector3 velocity;
-private bool isGrounded;
+public bool isGrounded;
 
 void Start()
 {

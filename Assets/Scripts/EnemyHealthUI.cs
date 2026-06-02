@@ -7,8 +7,6 @@ public class EnemyHealthUI : MonoBehaviour
     public Image healthFill;
     private Camera cam;
 
-    //public float maxHealth = 100f;
-
     void Start()
     {
         cam = Camera.main;
