@@ -241,7 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   player: {fileID: 0}
   damage: 10
-  attackCooldown: 1.5
+  attackCooldown: 0.5
   attackRange: 1.5
   hitEffect: {fileID: 1329845292236604, guid: 9bba9cf244c53c5439505dfc96fdd11c, type: 3}
 --- !u!1 &4169758384697221384
