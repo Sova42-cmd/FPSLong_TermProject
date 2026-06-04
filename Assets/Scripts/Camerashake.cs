@@ -26,7 +26,7 @@ public class CameraShake : MonoBehaviour
 
     public void Shake()
     {
-        // random offset in x and y only, z would push camera into walls
+        // random offset in x and y only
         shakeOffset = new Vector3(
             Random.Range(-shakeMagnitude, shakeMagnitude),
             Random.Range(-shakeMagnitude, shakeMagnitude),

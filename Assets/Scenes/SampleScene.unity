@@ -1913,7 +1913,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &244530192
 Transform:
   m_ObjectHideFlags: 0
@@ -1960,7 +1960,7 @@ MonoBehaviour:
   ignoreMask:
     serializedVersion: 2
     m_Bits: 64
-  damage: 50
+  damage: 100000
   Range: 100
   fpsCam: {fileID: 330585545}
   fireRate: 0.8
@@ -2535,7 +2535,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.66, z: 0}
+  m_LocalPosition: {x: 0, y: 0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2613,9 +2613,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b18d3ce64953d43979b0aaa9e50b5073, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
-  shakeMagnitude: 0.3
-  damping: 20
+  m_EditorClassIdentifier: Assembly-CSharp::CameraShake
+  shakeMagnitude: 1
+  damping: 8
 --- !u!1001 &334623417
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3019,7 +3019,7 @@ Transform:
   m_GameObject: {fileID: 375740478}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 6.8, y: 1.38, z: 3.53}
+  m_LocalPosition: {x: 0, y: 1.104, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3042,8 +3042,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   state: 0
   walkSpeed: 15
-  crouchSpeed: 4
-  crouchYScale: 0.6
+  crouchSpeed: 10
   crouchKey: 99
   dashKey: 304
   dashSpeed: 35
@@ -10662,8 +10661,8 @@ RectTransform:
   m_Children:
   - {fileID: 428153821}
   - {fileID: 1149947069}
-  - {fileID: 1202432004}
   - {fileID: 1769129005}
+  - {fileID: 1202432004}
   m_Father: {fileID: 1336531474}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -10858,7 +10857,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1545024107
 Transform:
   m_ObjectHideFlags: 0
@@ -11454,7 +11453,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1633343045
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13434,7 +13433,7 @@ Transform:
   m_GameObject: {fileID: 1924882287}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.02}
+  m_LocalPosition: {x: 0, y: 0, z: -0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13468,12 +13467,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   mover: {fileID: 375740482}
-  step: 0.01
+  step: 0.02
   maxStepDistance: 0.06
-  rotationStep: 4
+  rotationStep: 5
   maxRotationStep: 5
   smooth: 10
-  speedCurve: 0
+  speedCurve: 5
   travelLimit: {x: 0.025, y: 0.025, z: 0.025}
   bobLimit: {x: 0.01, y: 0.01, z: 0.01}
   bobExaggeration: 0

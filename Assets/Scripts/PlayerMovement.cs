@@ -12,8 +12,8 @@ private float moveSpeed;
 
 [Header("===== Crouch =====")]
 public float crouchSpeed;
-public float crouchYScale;
-private float startYScale;
+private bool isCrouching = false;
+private float standingHeight;
 public KeyCode crouchKey = KeyCode.C;
 
 [Header("==== Dash ====")]
@@ -44,7 +44,8 @@ public bool isGrounded;
 void Start()
 {
     controller = GetComponent<CharacterController>();   
-    startYScale = transform.localScale.y;
+    standingHeight = controller.height;
+    //controller.center = new Vector3(0f, standingHeight / 2f, 0f);
 }
 
 void Update()
@@ -53,7 +54,7 @@ void Update()
     HandleMovement();
     HandleJump();
     HandleCrouch();
-    HandleDash();
+    //HandleDash();
 }
 
 void OnDrawGizmosSelected() // krasnenkiy ground check
@@ -118,13 +119,12 @@ private void HandleCrouch()
 {
     if (Input.GetKeyDown(crouchKey))
     {
-        Debug.Log("I'm crouching!! I'm crouching!!");
-        transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+        controller.height = 0.05f;
     }
 
     if (Input.GetKeyUp(crouchKey))
     {
-        transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+        controller.height = standingHeight;
     }
 }
 private void HandleDash()
