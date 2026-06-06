@@ -86,7 +86,7 @@ public class EnemyMeleeImproved : MonoBehaviour
         return separation;
     }
 
-    private void HandleAttack() //same attack logic
+    private void HandleAttack()
     {
         attackTimer -= Time.deltaTime;
         

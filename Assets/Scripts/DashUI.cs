@@ -5,6 +5,8 @@ public class DashUI : MonoBehaviour
 {
     public PlayerMovement playerMovement;
     public Image dashFill;
+    public Image speedLines; 
+    //CanvasGroup linesGroup; 
 
     void Update()
     {
@@ -12,5 +14,9 @@ public class DashUI : MonoBehaviour
             dashFill.fillAmount = 1f - (playerMovement.dashCooldownTimer / playerMovement.dashCooldown);
         else
             dashFill.fillAmount = 1f;
+
+        speedLines.enabled = playerMovement.isDashing;
+
+       
     }
 }

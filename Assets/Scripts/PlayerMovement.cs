@@ -6,6 +6,10 @@ public class PlayerMovement : MonoBehaviour
 public enum MovementState { walking, crouching, dashing, air }
 public MovementState state;
 
+[Header("=== Audio/SFX ===")]
+
+public AudioSource dashSound;
+
 [Header("===== Movement =====")]
 public float walkSpeed;
 private float moveSpeed;
@@ -54,7 +58,7 @@ void Update()
     HandleMovement();
     HandleJump();
     HandleCrouch();
-    //HandleDash();
+    HandleDash();
 }
 
 void OnDrawGizmosSelected() // krasnenkiy ground check
@@ -137,6 +141,8 @@ private void HandleDash()
         isDashing = true;
         dashTimer = dashDuration;
         dashCooldownTimer = dashCooldown;
+
+        dashSound.Play();
 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");

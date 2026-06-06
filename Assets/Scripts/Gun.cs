@@ -22,8 +22,11 @@ public class Gun : MonoBehaviour
     private Vector3 recoilPosCurrent = Vector3.zero;
 
     [Header("=== VFX ===")]
-    //public ParticleSystem MuzzleFlash;
+    //public GameObject MuzzleFlash;
     public GameObject ImpactEffect;
+
+    [Header("=== SFX ===")]
+    public AudioSource GunShotSound;
 
     void Update()
     {
@@ -38,6 +41,10 @@ public class Gun : MonoBehaviour
 
     private void Shoot()
     {
+
+        //Instantiate(MuzzleFlash, transform.position, transform.rotation);
+
+        GunShotSound.Play();
         // push backward on local Z axis
         recoilPosTarget += new Vector3(0f, 0f, -recoilBackAmount);
         recoilPosTarget += new Vector3(0f, recoilUpAmount, -recoilBackAmount);
