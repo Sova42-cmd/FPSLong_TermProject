@@ -7,7 +7,7 @@ public class PortalTrigger : MonoBehaviour
     
     void Start()
     {
-        Debug.Log("PortalTrigger is alive on: " + gameObject.name);
+        Debug.Log("portal trigger na etom objetce: " + gameObject.name);
     }
     private void OnTriggerEnter(Collider other)
     {

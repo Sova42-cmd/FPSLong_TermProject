@@ -5108,7 +5108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MouseMovement
   playerBody: {fileID: 375740481}
-  mouseSensetivity: 400
+  mouseSensetivity: 600
   topClamp: -90
   bottomClamp: 90
 --- !u!114 &330585549
@@ -5385,7 +5385,7 @@ GameObject:
   - component: {fileID: 375740483}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12323,8 +12323,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a566782cd051742928ca9800afd04090, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  killsRequired: 10
-  portalGun: {fileID: 0}
+  killsRequired: 2
+  portalGun: {fileID: 1900209125}
 --- !u!4 &903504401
 Transform:
   m_ObjectHideFlags: 0
@@ -12334,7 +12334,7 @@ Transform:
   m_GameObject: {fileID: 903504399}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.27, y: -0, z: -118.4}
+  m_LocalPosition: {x: -18.231659, y: 6.9321694, z: -105.28733}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25192,7 +25192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   fpsCam: {fileID: 330585545}
   range: 100
-  portalPrefab: {fileID: 2983341376990486995, guid: 379c8423ab6f14b20a206a715a1cd827, type: 3}
+  portalPrefab: {fileID: 2262980596145649134, guid: 43ca3aa0e02a043e39dd97b2d2036e7b, type: 3}
   ignoreMask:
     serializedVersion: 2
     m_Bits: 64

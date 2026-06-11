@@ -44,7 +44,8 @@ public class Gun : MonoBehaviour
 
         //Instantiate(MuzzleFlash, transform.position, transform.rotation);
 
-        GunShotSound.Play();
+        if (GunShotSound != null)
+            GunShotSound.Play();
         // push backward on local Z axis
         recoilPosTarget += new Vector3(0f, 0f, -recoilBackAmount);
         recoilPosTarget += new Vector3(0f, recoilUpAmount, -recoilBackAmount);

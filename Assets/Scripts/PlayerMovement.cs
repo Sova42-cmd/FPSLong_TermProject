@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 
@@ -40,16 +41,31 @@ public Transform groundCheck;
 public float groundDistance = 0.4f;
 public LayerMask groundMask;
 
-// private state
 private CharacterController controller;
 private Vector3 velocity;
 public bool isGrounded;
+
+void Awake()
+{
+    DontDestroyOnLoad(gameObject);
+}
+
+void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+{
+    GameObject spawnPoint = GameObject.Find("PlayerSpawnPoint");
+    if (spawnPoint != null)
+    {
+        CharacterController cc = GetComponent<CharacterController>();
+        cc.enabled = false;
+        transform.position = spawnPoint.transform.position;
+        cc.enabled = true;
+    }
+}
 
 void Start()
 {
     controller = GetComponent<CharacterController>();   
     standingHeight = controller.height;
-    //controller.center = new Vector3(0f, standingHeight / 2f, 0f);
 }
 
 void Update()
@@ -142,7 +158,8 @@ private void HandleDash()
         dashTimer = dashDuration;
         dashCooldownTimer = dashCooldown;
 
-        dashSound.Play();
+        if (dashSound != null)
+            dashSound.Play();
 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
