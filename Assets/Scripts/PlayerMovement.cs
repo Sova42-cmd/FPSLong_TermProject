@@ -48,6 +48,7 @@ public bool isGrounded;
 void Awake()
 {
     DontDestroyOnLoad(gameObject);
+    SceneManager.sceneLoaded += OnSceneLoaded; 
 }
 
 void OnSceneLoaded(Scene scene, LoadSceneMode mode)
