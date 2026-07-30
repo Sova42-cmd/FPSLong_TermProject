@@ -15,9 +15,9 @@ public class EnemyMeleeImproved : MonoBehaviour
     private float attackTimer = 0f;
 
     [Header("=== Separation ===")]
-    public float separationRadius = 2.0f; //how close they get to each other
-    public float separationWeight = 1.5f; //how strongly they push away from each other
-    public LayerMask enemyLayer; //check only for enemies for optimization
+    public float separationRadius = 2.0f;
+    public float separationWeight = 1.5f;
+    public LayerMask enemyLayer; //only enemy check
 
     [Header("=== VFX ===")]
     public GameObject hitEffect;
@@ -25,15 +25,39 @@ public class EnemyMeleeImproved : MonoBehaviour
     private NavMeshAgent agent;
     private readonly Collider[] nearbyEnemies = new Collider[10]; 
 
-    void Start()
+void Start()
+{
+    if (player == null)
+{
+    GameObject playerObj = GameObject.FindWithTag("Player");
+    if (playerObj != null)
     {
-        agent = GetComponent<NavMeshAgent>();
-        playerHealth = player.GetComponent<PlayerHealth>();
-        
-        enemyHealth = GetComponent<EnemyHealth>();
-        
-        agent.stoppingDistance = attackRange;
+        player = playerObj.transform;
     }
+}
+    agent = GetComponent<NavMeshAgent>();
+    enemyHealth = GetComponent<EnemyHealth>();
+    agent.stoppingDistance = attackRange;
+
+    // if player isnt assigned find by tag
+    if (player == null)
+    {
+        GameObject playerObj = GameObject.FindWithTag("Player");
+        if (playerObj != null)
+        {
+            player = playerObj.transform;
+        }
+    }
+
+    if (player != null)
+    {
+        playerHealth = player.GetComponent<PlayerHealth>();
+    }
+    else
+    {
+        Debug.LogWarning($"EnemyMeleeImproved No Player found for {gameObject.name}!");
+    }
+}
 
     void Update()
     {

@@ -23,7 +23,14 @@ public class LevelManager : MonoBehaviour
 
         if (currentKills >= killsRequired)
         {
-            portalGun.Charge();
+            if (portalGun != null)
+                portalGun.Charge();
         }
+    }
+
+    // Helper check for EnemySpawner
+    public bool IsGoalReached()
+    {
+        return currentKills >= killsRequired;
     }
 }
